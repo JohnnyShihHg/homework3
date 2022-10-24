@@ -27,19 +27,18 @@ class UserAuthController extends Controller
 
     public function signup(SignupRequest $request)
     {
-        $token = $this->UserAuthService->signup($request);
-
-        if ($token == false) {
-            return response()->json([
-                'status' => false,
-                'message' => 'DUPLICATE_DATA',
-            ], 400);
-        } else {
+        try {
+            $token = $this->UserAuthService->signup($request);
             return  response()->json([
                 'status' => true,
                 'token' => $token,
-                'message' => 'account created successfully'
+                'message' => 'Account created successfully'
             ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Account or Phone number already existence',
+            ], 400);
         }
     }
 

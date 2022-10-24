@@ -27,11 +27,11 @@ class UserAuthService
         $user->password = bcrypt($request->input('password'));
 
         if (User::where('account', '=', $user['account'])->get()->count() > 0) {
-            return false;
+            throw new Exception();
         }
 
         if (User::where('phone_no', '=', $user['phone_no'])->get()->count() > 0) {
-            return false;
+            throw new Exception();
         }
 
         $user->save();
