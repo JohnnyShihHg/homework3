@@ -13,6 +13,10 @@ class ProductCategoryService
 
     public static function index()
     {
-        return ProductCategory::with('products')->get();
+        try {
+            return ProductCategory::with('products')->get();
+        } catch (\Exception $e) {
+            return $e;
+        }
     }
 }
