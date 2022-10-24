@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\UserAuthService;
+use App\Http\Requests\LoginRequest;
 
 class UserAuthController extends Controller
 {
@@ -42,18 +43,12 @@ class UserAuthController extends Controller
 
     /**
      * 登入取得Token
-     * @param Request $request
+     * @param LoginRequest $request
      * @return JsonResponse
      */
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-
-        $this->validate($request, [
-            'account' => 'required|string',
-            'password' => 'required|string',
-        ]);
-
         $token = $this->UserAuthService->login($request);
 
         if ($token == false) {

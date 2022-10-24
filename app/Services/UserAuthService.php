@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -45,7 +46,7 @@ class UserAuthService
      * @return JsonResponse
      */
 
-    public static function login(Request $request)
+    public static function login(LoginRequest $request)
     {
         $user = User::where('account', $request->account)->first()->makeVisible(['password']);
 
