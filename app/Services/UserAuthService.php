@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\SignupRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -12,11 +13,11 @@ class UserAuthService
 {
     /**
      * 註冊帳號
-     * @param Request $request
+     * @param SignupRequest $request
      * @return JsonResponse
      */
 
-    public static function signup(Request $request)
+    public static function signup(SignupRequest $request)
     {
         $user = new User();
         $user->account = $request->input('account');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\UserAuthService;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\SignupRequest;
 
 class UserAuthController extends Controller
 {
@@ -19,11 +20,11 @@ class UserAuthController extends Controller
 
     /**
      * 註冊帳號
-     * @param Request $request
+     * @param SignupRequest $request
      * @return JsonResponse
      */
 
-    public function signup(Request $request)
+    public function signup(SignupRequest $request)
     {
         $token = $this->UserAuthService->signup($request);
 
