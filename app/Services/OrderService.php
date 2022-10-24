@@ -16,7 +16,11 @@ class OrderService
 
     public static function index()
     {
-        return Order::all();
+        try {
+            return Order::all();
+        } catch (\Exception $e) {
+            return $e;
+        }
     }
 
     public function store()
