@@ -51,19 +51,25 @@ class UserAuthService
 
     public static function login(LoginRequest $request)
     {
-        $user = User::where('account', $request->account)->first()->makeVisible(['password']);
+        $user = User::where('account', $request->account)->first();
+
+        if ($user == null) {
+            throw new Exception();
+        }
+
+        $user->makeVisible(['password']);
 
         if (!Hash::check($request->password, $user->password)) {
-            return false;
+            throw new Exception();
         }
 
         $credentials = $request->only(['account', 'password']);
 
-        if (!$token = auth()->attempt($credentials)) {
-            return false;
+        if ($token = auth()->attempt($credentials)) {
+            return $token;
+        } else {
+            throw new Exception();
         }
-
-        return $token;
     }
 
     /**

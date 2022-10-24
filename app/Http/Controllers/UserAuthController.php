@@ -51,16 +51,15 @@ class UserAuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $token = $this->UserAuthService->login($request);
-
-        if ($token == false) {
+        try {
+            $token = $this->UserAuthService->login($request);
+            return $this->respondWithToken($token);
+        } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
                 'message' => 'DATA_ERROR . Please try again or try another account & password',
             ], 400);
         }
-
-        return $this->respondWithToken($token);
     }
 
     /**
