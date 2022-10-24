@@ -9,6 +9,7 @@ use App\Http\Requests\SignupRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ResetPasswordRequest;
+use Exception;
 
 class UserAuthService
 {
@@ -74,22 +75,27 @@ class UserAuthService
     public static function resetPassword(ResetPasswordRequest $request)
     {
         $user = new User();
-        //找到舊的密碼
-        $user = User::where('account', $request->account)->first()->makeVisible(['password']);
-        //確認輸入的密碼和新的密碼相同
-        if (Hash::check($request->oldPassword, $user->password)) {
-            $newPassword = bcrypt($request->input('newPassword'));
-            $user->password = $newPassword;
-            $user->save();
 
-            Auth::logout();
+        try {
+            //找到舊的密碼
+            $user = User::where('account', $request->account)->first()->makeVisible(['password']);
+            //確認輸入的密碼和新的密碼相同
+            if (Hash::check($request->oldPassword, $user->password)) {
+                $newPassword = bcrypt($request->input('newPassword'));
+                $user->password = $newPassword;
+                $user->save();
 
-            return response()
-                ->json([
-                    'status' => true,
-                    'message' => 'ResetPassword successful'
-                ], 200);
-        } else {
+                Auth::logout();
+
+                return response()
+                    ->json([
+                        'status' => true,
+                        'message' => 'ResetPassword successful'
+                    ], 200);
+            }
+
+            throw new Exception('Password reset failed , please try again');
+        } catch (\Exception $e) {
             return response()
                 ->json([
                     'status' => false,
