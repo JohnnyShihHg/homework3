@@ -90,10 +90,14 @@ class OrderService
 
     public function detail($order_no)
     {
-        $order = Order::where('order_no', $order_no)
-            ->with('user:id,account,phone_no', 'detail:id,orders_id,product_categories_id,product_price,product_count')
-            ->get();
+        try {
+            $order = Order::where('order_no', $order_no)
+                ->with('user:id,account,phone_no', 'detail:id,orders_id,product_categories_id,product_price,product_count')
+                ->get();
 
-        return $order;
+            return $order;
+        } catch (\Exception $e) {
+            return $e;
+        }
     }
 }
