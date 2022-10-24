@@ -106,12 +106,16 @@ class UserAuthService
 
     public static function logout()
     {
-        Auth::logout();
+        try {
+            Auth::logout();
 
-        return response()
-            ->json([
-                'status' => true,
-                'message' => 'Successfully logged out.'
-            ], 200);
+            return response()
+                ->json([
+                    'status' => true,
+                    'message' => 'Successfully logged out.'
+                ], 200);
+        } catch (\Exception $e) {
+            return $e;
+        }
     }
 }
