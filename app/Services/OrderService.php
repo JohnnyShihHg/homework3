@@ -41,6 +41,7 @@ class OrderService
 
         if (!$cart) {
             return response()->json([
+                'status' => false,
                 'message' => 'Your Cart is empty'
             ], 400);
         }
