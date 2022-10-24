@@ -8,6 +8,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignupRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\ResetPasswordRequest;
 
 class UserAuthService
 {
@@ -70,7 +71,7 @@ class UserAuthService
      * @return JsonResponse
      */
 
-    public static function resetPassword(Request $request)
+    public static function resetPassword(ResetPasswordRequest $request)
     {
         $user = new User();
         //找到舊的密碼
@@ -86,13 +87,13 @@ class UserAuthService
             return response()
                 ->json([
                     'status' => true,
-                    'message' => 'resetPassword successful'
+                    'message' => 'ResetPassword successful'
                 ], 200);
         } else {
             return response()
                 ->json([
                     'status' => false,
-                    'message' => 'password reset failed , please try again'
+                    'message' => 'Password reset failed , please try again'
                 ], 400);
         }
     }

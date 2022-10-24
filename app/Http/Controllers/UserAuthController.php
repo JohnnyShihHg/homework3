@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\UserAuthService;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignupRequest;
+use App\Http\Requests\ResetPasswordRequest;
 
 class UserAuthController extends Controller
 {
@@ -64,11 +65,11 @@ class UserAuthController extends Controller
 
     /**
      * 重製密碼
-     * @param Request $request
+     * @param ResetPasswordRequest $request
      * @return JsonResponse
      */
 
-    public function resetPassword(Request $request)
+    public function resetPassword(ResetPasswordRequest $request)
     {
         $result = $this->UserAuthService->resetPassword($request);
 
