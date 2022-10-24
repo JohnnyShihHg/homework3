@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CartStoreRequest;
 
 
 class CartService
@@ -12,7 +13,7 @@ class CartService
      * 列出所有商品
      */
 
-    public static function store($request)
+    public static function store(CartStoreRequest $request)
     {
         Cart::create([
             'users_id' => Auth::user()->id,

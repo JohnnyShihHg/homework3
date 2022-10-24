@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Services\CartService;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CartStoreRequest;
 
 class CartController extends Controller
 {
@@ -29,12 +29,8 @@ class CartController extends Controller
     /**
      * 加入購物車
      */
-    public function store(Request $request)
+    public function store(CartStoreRequest $request)
     {
-        $this->validate($request, [
-            'product_categories_id' => 'required|exists:product_categories,id'
-        ]);
-
         $store = $this->CartService->store($request);
 
         return $store;
