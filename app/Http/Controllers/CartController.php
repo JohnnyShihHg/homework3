@@ -27,7 +27,52 @@ class CartController extends Controller
     }
 
     /**
-     * 加入購物車
+     * @OA\Post(
+     *   tags={"Cart"},
+     *   path="/cart",
+     *   summary="成立購物車 ( 需登入 )",
+     *   security={{"user_token":{}}},
+     *   @OA\RequestBody(
+     *     @OA\MediaType(
+     *          mediaType="multipart/form-data",
+     *   @OA\Schema(
+     *         required={"product_categories_id"},
+     *         @OA\Property(property="product_categories_id", type="integer", description="商品ID", example="1"),
+     *       )
+     *     )
+     *   ),
+     *   @OA\Response(response=200, description="Add cart successful",
+     *      content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *                 example=
+     *                    {
+     *                         "message": "Add cart successful"
+     *                   }
+     *          )
+     *       }
+     *   ),
+     * @OA\Response(response=400, description="Product is out of stock",
+     * content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *                 example=
+     *                    {
+     *                         "message": "Product is out of stock"
+     *                   }
+     *          )
+     *       }),
+     * @OA\Response(response=401, description="Unauthorized",
+     * content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *                 example=
+     *                    {
+     *                         "message": "Token not provided"
+     *                   }
+     *          )
+     *       })
+     * )
      */
     public function store(CartStoreRequest $request)
     {
