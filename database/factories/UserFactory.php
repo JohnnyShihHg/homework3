@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(User::class, function (Faker $faker) {
     return [
         'account' => $faker->name,
-        'password' => 'ps123',
+        'password' => bcrypt('ps123'),
         'phone_no' => '0800092000'
     ];
 });
